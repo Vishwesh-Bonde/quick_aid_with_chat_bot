@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style1.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <style>
+        .user-info {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-info i {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .logout-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- User Info -->
+    {% if session.get('username') %}
+    <div class="user-info">
+        <i class="fas fa-user-circle"></i>
+        <span>{{ session['username'] }}</span>
+        <form action="{{ url_for('logout') }}" method="get" style="display:inline;">
+            <button class="logout-btn">Logout</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <!-- Flash Messages -->
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="container">
+        <div class="left-panel">
+            <h2>Quick Aid</h2>
+            <p>Welcome back! Sign in to continue.</p>
+        </div>
+        <div class="right-panel">
+            <form action="/login" method="POST">
+                <h2>Sign In</h2>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Sign In</button>
+                <p class="forgot-password"><a href="#">Forgot Password?</a></p>
+                <p class="register-link">Don't have an account? <a href="/register">Sign Up</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- FontAwesome CDN for user icon -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+</body>
+</html>

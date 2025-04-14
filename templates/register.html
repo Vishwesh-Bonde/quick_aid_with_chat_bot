@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <title>Register</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            width: 95%;
+            max-width: 1000px;
+            height: 90vh;
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .left-panel {
+            flex: 1;
+            position: relative;
+        }
+
+        .left-panel {
+    background: url('https://wallpapercave.com/wp/wp2655120.jpg') no-repeat center center/cover;
+}
+
+
+        .overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            background-color: rgba(0,0,0,0.5);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .right-panel {
+            flex: 1;
+            background-color: #1c1c1c;
+            color: white;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding-right: 10px;
+        }
+
+        form h2 {
+            margin-bottom: 10px;
+        }
+
+        input, select {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+            width: 100%;
+        }
+
+        button {
+            background-color: #2575fc;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1a5ed8;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .flash {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            background-color: #ff4c4c;
+            color: white;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .left-panel {
+                height: 200px;
+            }
+
+            .right-panel {
+                max-height: 60vh;
+                overflow-y: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <div class="overlay-text">
+                <h2>Quick Aid</h2>
+                <p>Expert advice from top doctors.</p>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('register') }}" method="POST">
+                <h2>Sign Up</h2>
+
+                <label for="username">Full Name</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" min="0">
+
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label for="height">Height (cm)</label>
+                <input type="number" step="0.1" id="height" name="height">
+
+                <label for="weight">Weight (kg)</label>
+                <input type="number" step="0.1" id="weight" name="weight">
+
+                <label for="blood_group">Blood Group</label>
+                <input type="text" id="blood_group" name="blood_group" placeholder="e.g., A+, O-">
+
+                <button type="submit">Sign Up</button>
+
+                <p class="login-link">I have an account? <a href="{{ url_for('login') }}">Sign In</a></p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

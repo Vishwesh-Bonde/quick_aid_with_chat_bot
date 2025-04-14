@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quick Aid - Home Remedies</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/homeRemedies.css') }}" />
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+</head>
+<body>
+
+  <header>
+    <div class="logo">Quick Aid</div>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('home_remedies') }}" class="active">Home Remedies</a></li>
+        <li><a href="{{ url_for('physiotherapy') }}">Physiotherapy</a></li>
+        <li><a href="{{ url_for('providing_nurse') }}">Providing Nurse</a></li>
+        <li><a href="{{ url_for('nearest_doctor') }}">Nearest Dr</a></li>
+        <li><a href="{{ url_for('online_appointment') }}">Online Appointment</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Search for a Home Remedy</h2>
+    <section id="search-section">
+      <form method="GET" action="{{ url_for('home_remedies') }}" style="display: flex; flex-direction: column; align-items: center;">
+        <label for="query" style="font-size: 18px; margin-bottom: 10px;">🔍 Search for a Home Remedy</label>
+        <input 
+          type="text" 
+          id="query" 
+          name="query" 
+          placeholder="Enter a symptom (e.g., headache, cough, etc.)" 
+          style="
+            padding: 12px 16px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 0 8px rgba(255, 204, 0, 0.2);
+            margin-bottom: 15px;
+          "
+          required
+        />
+        <button type="submit" class="tool-btn">Search</button>
+      </form>
+    
+      {% if search_query %}
+        <div class="search-result">
+          {% if search_result %}
+            <h3 style="color: #ffcc00;">Result for "{{ search_query }}"</h3>
+            <p><strong>{{ search_result[0] }}</strong>: {{ search_result[1] }}</p>
+          {% else %}
+            <p>No remedies found for "<strong>{{ search_query }}</strong>".</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Quick Aid. All Rights Reserved.
+  </footer>
+
+</body>
+</html>

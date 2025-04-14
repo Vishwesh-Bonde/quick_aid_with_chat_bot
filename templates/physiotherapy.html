@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quick Aid - Physiotherapy</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/physiotherapy.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+</head>
+<body>
+
+  <header>
+    <div class="logo">Quick Aid</div>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('home_remedies') }}">Home Remedies</a></li>
+        <li><a href="{{ url_for('physiotherapy') }}" class="active">Physiotherapy</a></li>
+        <li><a href="{{ url_for('providing_nurse') }}">Providing Nurse</a></li>
+        <li><a href="{{ url_for('nearest_doctor') }}">Nearest Dr</a></li>
+        <li><a href="{{ url_for('online_appointment') }}">Online Appointment</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="center-box">
+      <div class="remedies-box">
+        <h2><i class="fas fa-dumbbell"></i> Physiotherapy Exercises</h2>
+        <p>Search for physiotherapy exercises based on your condition.</p>
+
+        <input type="text" class="search-bar" id="searchBar" placeholder="Search for condition..." onkeyup="debouncedSearch()">
+        <div id="exerciseResult" class="remedies-result"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Quick Aid. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let debounceTimer;
+    function debouncedSearch() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(searchExercises, 400);
+    }
+
+    function searchExercises() {
+      let searchQuery = document.getElementById("searchBar").value.trim();
+      let resultDiv = document.getElementById("exerciseResult");
+
+      if (!searchQuery) {
+        resultDiv.style.display = "none";
+        return;
+      }
+
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML = `
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          <span>Searching...</span>
+        </div>
+      `;
+
+      fetch(`/search_exercises?query=${encodeURIComponent(searchQuery)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.length === 0) {
+            resultDiv.innerHTML = "<b>No exercises found for this condition.</b>";
+            return;
+          }
+
+          let output = data.map(item => `
+            <div style="margin-bottom: 15px;">
+              <h4 style="color:#ffc107;">${item[0]}</h4>
+              <ul style="margin-left: 20px;">
+                ${item[1].split('. ').map(step => step.trim()).filter(Boolean).map(step => `<li>${step}</li>`).join('')}
+              </ul>
+            </div>
+          `).join("");
+
+          resultDiv.innerHTML = output;
+        })
+        .catch(error => {
+          console.error(error);
+          resultDiv.innerHTML = "<b>⚠️ Something went wrong. Please try again later.</b>";
+        });
+    }
+  </script>
+
+</body>
+</html>

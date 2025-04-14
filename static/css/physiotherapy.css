@@ -1,0 +1,177 @@
+/* Base Styling */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url('../images/phy.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #f1f1f1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+header {
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 25px 20px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.logo {
+  font-size: 36px;
+  font-weight: bold;
+  color: #ffcc00;
+  letter-spacing: 1px;
+}
+
+/* Navigation */
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 15px 0;
+  flex-wrap: wrap;
+}
+
+nav ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 18px;
+  font-size: 1rem;
+  border-radius: 6px;
+  transition: 0.3s ease;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffc107;
+}
+
+/* Main Section */
+main {
+  padding: 80px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+h2 {
+  color: #ffc107;
+  font-size: 2.2rem;
+  margin-bottom: 25px;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(255, 204, 0, 0.3);
+}
+
+/* Input Field */
+input[type="text"] {
+  padding: 14px;
+  width: 90%;
+  max-width: 450px;
+  border-radius: 8px;
+  border: 2px solid #ffc107;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+  outline: none;
+}
+
+input::placeholder {
+  color: #dddddd;
+}
+
+/* Button */
+button {
+  padding: 12px 25px;
+  background-color: #ffcc00;
+  color: black;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 0 12px rgba(255, 204, 0, 0.4);
+}
+
+button:hover {
+  background-color: #e6b800;
+  box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+}
+
+/* Exercise Results Container */
+.exercise-container {
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 0 16px rgba(255, 193, 7, 0.4);
+  max-width: 850px;
+  width: 100%;
+  padding: 30px;
+  margin-bottom: 25px;
+  color: #f2f2f2;
+}
+
+.exercise-container h3 {
+  color: #ffcc00;
+  margin-bottom: 12px;
+  font-size: 1.5rem;
+}
+
+.exercise-container p {
+  line-height: 1.7;
+  font-size: 1rem;
+  color: #eeeeee;
+}
+
+/* Results Box */
+.exercise-result {
+  background: rgba(0, 0, 0, 0.75);
+  border-left: 5px solid #ffc107;
+  border-radius: 10px;
+  padding: 22px;
+  margin-top: 20px;
+  box-shadow: 0 0 12px rgba(255, 193, 7, 0.5);
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.95);
+  color: #cccccc;
+  font-size: 14px;
+  margin-top: auto;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .logo {
+    font-size: 28px;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+  }
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FAQ - Quick Aid</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+
+  <!-- Embedded Dark Theme CSS -->
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: #ccffcc;
+    }
+
+    header {
+      background-color: #0f0f0f;
+      padding: 20px;
+      border-bottom: 2px solid #1aff66;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      color: #1aff66;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 15px 0 0 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    nav ul li {
+      display: inline;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #80ffaa;
+      font-size: 1em;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: #1aff66;
+      color: #000;
+    }
+
+    .faq {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq h2 {
+      font-size: 1.8em;
+      color: #1aff66;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .faq-item {
+      background-color: #111;
+      border-left: 4px solid #1aff66;
+      margin-bottom: 20px;
+      padding: 15px 20px;
+      border-radius: 8px;
+    }
+
+    .faq-item h3 {
+      color: #80ffaa;
+      margin-top: 0;
+    }
+
+    .faq-item p {
+      margin: 10px 0 0;
+      color: #ccffcc;
+    }
+
+    .faq-item a {
+      color: #00ffcc;
+      text-decoration: underline;
+    }
+
+    .faq-item a:hover {
+      color: #1aff66;
+    }
+
+    footer {
+      background-color: #0f0f0f;
+      text-align: center;
+      padding: 20px;
+      border-top: 2px solid #1aff66;
+      color: #99ffcc;
+      margin-top: 40px;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 0.95em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Frequently Asked Questions (FAQ)</h1>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('home_remedies') }}">Home Remedies</a></li>
+        <li><a href="{{ url_for('physiotherapy') }}">Physiotherapy</a></li>
+        <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="faq">
+    <h2>General Questions</h2>
+    <div class="faq-item">
+      <h3>What is Quick Aid?</h3>
+      <p>Quick Aid is a platform that offers a range of health services, including home remedies, physiotherapy exercises, online appointments, and health-related news.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How can I book an appointment?</h3>
+      <p>You can book an online appointment with a doctor through our <a href="{{ url_for('online_appointment') }}">Online Appointment</a> page.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How can I search for home remedies?</h3>
+      <p>You can search for home remedies based on symptoms by visiting the <a href="{{ url_for('home_remedies') }}">Home Remedies</a> page and entering your query.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How can I get physiotherapy exercises for a condition?</h3>
+      <p>You can search for physiotherapy exercises related to a condition by visiting our <a href="{{ url_for('physiotherapy') }}">Physiotherapy</a> page.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Quick Aid. All rights reserved.</p>
+  </footer>
+</body>
+</html>

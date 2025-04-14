@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Learn about Quick Aid's services and how we can help you." />
+  <meta name="keywords" content="services, health services, Quick Aid" />
+  <meta property="og:title" content="Quick Aid - Our Services" />
+  <meta property="og:description" content="Discover the health services we offer at Quick Aid." />
+  <title>Our Services - Quick Aid</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+
+  <!-- Embedded CSS for dark green-black theme -->
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: #ccffcc;
+    }
+
+    header {
+      background-color: #0f0f0f;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid #1aff66;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.2em;
+      color: #1aff66;
+    }
+
+    .home-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: #80ffaa;
+      text-decoration: none;
+      font-size: 1em;
+    }
+
+    .home-link:hover {
+      text-decoration: underline;
+      color: #00e676;
+    }
+
+    .services {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .services h2 {
+      font-size: 1.8em;
+      color: #1aff66;
+      margin-bottom: 20px;
+    }
+
+    .services ul {
+      list-style-type: square;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0;
+      text-align: left;
+    }
+
+    .services li {
+      margin: 10px 0;
+      font-size: 1.1em;
+      color: #ccffdd;
+    }
+
+    footer {
+      background-color: #0f0f0f;
+      text-align: center;
+      padding: 20px;
+      border-top: 2px solid #1aff66;
+      color: #99ffcc;
+      margin-top: 40px;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 0.95em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Our Services</h1>
+    <a href="{{ url_for('home') }}" class="home-link">← Go to Home</a>
+  </header>
+
+  <section class="services">
+    <h2>What We Offer</h2>
+    <ul>
+      <li>Home Remedies for common illnesses</li>
+      <li>Online Appointments with doctors</li>
+      <li>Physiotherapy support and exercise recommendations</li>
+      <li>Trackers, Calculators, and Symptom Tools</li>
+      <li>Daily Medical News</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Quick Aid. All rights reserved.</p>
+  </footer>
+</body>
+</html>

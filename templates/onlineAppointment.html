@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quick Aid - Online Appointment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/onlineAppointment.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+</head>
+<body>
+
+  <header>
+    <h1 class="logo">Quick Aid</h1>
+    <h2 class="sub-heading">Book an Online Appointment Anytime, Anywhere</h2>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('home_remedies') }}">Home Remedies</a></li>
+        <li><a href="{{ url_for('physiotherapy') }}">Physiotherapy</a></li>
+        <li><a href="{{ url_for('providing_nurse') }}">Providing Nurse</a></li>
+        <li><a href="{{ url_for('nearest_doctor') }}">Nearest Dr</a></li>
+        <li><a href="{{ url_for('online_appointment') }}" class="active">Online Appointment</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="content">
+      <div class="card">
+        <h2>Online Appointment</h2>
+        <p>Select a date and time for your online appointment.</p>
+        <form id="appointmentForm">
+          <label for="appointmentDate">Date:</label>
+          <input type="date" id="appointmentDate" name="appointmentDate" required>
+
+          <label for="appointmentTime">Time:</label>
+          <input type="time" id="appointmentTime" name="appointmentTime" required>
+
+          <button class="btn" type="button" onclick="bookAppointment()">Book Appointment</button>
+        </form>
+        <div id="appointmentResult" class="result"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Quick Aid. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      let today = new Date().toISOString().split("T")[0];
+      document.getElementById("appointmentDate").setAttribute("min", today);
+    });
+
+    function bookAppointment() {
+      let dateInput = document.getElementById("appointmentDate");
+      let timeInput = document.getElementById("appointmentTime");
+      let resultDiv = document.getElementById("appointmentResult");
+
+      let date = dateInput.value;
+      let time = timeInput.value;
+      let selectedDate = new Date(date);
+      let today = new Date();
+
+      if (!date || !time) {
+        resultDiv.innerHTML = "❌ Please select both date and time.";
+        resultDiv.style.color = "red";
+        return;
+      }
+
+      if (selectedDate < today.setHours(0,0,0,0)) {
+        resultDiv.innerHTML = "❌ You cannot select a past date!";
+        resultDiv.style.color = "red";
+        return;
+      }
+
+      resultDiv.innerHTML = `✅ Appointment booked for ${date} at ${time}.`;
+      resultDiv.style.color = "green";
+    }
+  </script>
+
+</body>
+</html>

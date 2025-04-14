@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(45deg, #2c3e50, #8e44ad);
+    position: relative;
+}
+
+.flash-messages {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 500px;
+    z-index: 1000;
+    text-align: center;
+}
+
+.flash {
+    padding: 12px;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.flash.success {
+    background-color: #28a745;
+    color: white;
+}
+
+.flash.error {
+    background-color: #dc3545;
+    color: white;
+}
+
+.container {
+    display: flex;
+    width: 900px;
+    height: 500px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.left-panel {
+    flex: 1;
+    background: url('https://wallpapercave.com/wp/wp2655120.jpg') no-repeat center center/cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.left-panel h2, .left-panel p {
+    font-size: 18px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.right-panel {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #1e1e1e;
+    color: white;
+    border-radius: 0 10px 10px 0;
+}
+
+.right-panel h2 {
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    background: #007BFF;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+.forgot-password, .register-link {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.forgot-password a, .register-link a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.forgot-password a:hover, .register-link a:hover {
+    text-decoration: underline;
+}

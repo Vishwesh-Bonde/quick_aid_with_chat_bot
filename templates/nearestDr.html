@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quick Aid - Nearest Doctor</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/nearest_doctor.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="logo">Quick Aid</div>
+    <div class="nav-links">
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('home_remedies') }}">Home Remedies</a>
+      <a href="{{ url_for('physiotherapy') }}">Physiotherapy</a>
+      <a href="{{ url_for('providing_nurse') }}">Providing Nurse</a>
+      <a href="{{ url_for('nearest_doctor') }}" class="active">Nearest Dr</a>
+      <a href="{{ url_for('online_appointment') }}">Online Appointment</a>
+    </div>
+  </div>
+
+  <div class="center-box">
+    <div class="content-box">
+      <h2><i class="fas fa-user-md"></i> Find Nearest Doctor</h2>
+      <p>Click the button to get a list of doctors near you.</p>
+      <button class="btn" onclick="findNearestDoctor()">
+        <i class="fas fa-map-marker-alt"></i> Find Doctors
+      </button>
+      <div id="doctorResult" class="result"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Quick Aid. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function findNearestDoctor() {
+      let resultDiv = document.getElementById("doctorResult");
+      resultDiv.innerHTML = `
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          <span>Fetching location...</span>
+        </div>
+      `;
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          let lat = position.coords.latitude.toFixed(4);
+          let lon = position.coords.longitude.toFixed(4);
+
+          setTimeout(() => {
+            resultDiv.innerHTML = `
+              <b>Your Location:</b> ${lat}, ${lon} <br>
+              <div class="doctor-list">
+                <div class="doctor-item"><i class="fas fa-user-md doctor-icon"></i> Dr. A Sharma - General Physician (1.2 km away)</div>
+                <div class="doctor-item"><i class="fas fa-user-md doctor-icon"></i> Dr. P Mehta - Cardiologist (2.5 km away)</div>
+                <div class="doctor-item"><i class="fas fa-user-md doctor-icon"></i> Dr. R Kapoor - Pediatrician (3.0 km away)</div>
+                <div class="doctor-item"><i class="fas fa-user-md doctor-icon"></i> Dr. V Rao - Orthopedic (3.8 km away)</div>
+              </div>
+            `;
+          }, 2000);
+        }, () => {
+          resultDiv.innerHTML = "⚠️ Location access denied. Please enable GPS.";
+        });
+      } else {
+        resultDiv.innerHTML = "⚠️ Geolocation is not supported by your browser.";
+      }
+    }
+  </script>
+
+</body>
+</html>

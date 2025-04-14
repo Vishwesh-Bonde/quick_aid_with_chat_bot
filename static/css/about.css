@@ -1,0 +1,117 @@
+body {
+    background: url("https://static.vecteezy.com/system/resources/previews/006/712/985/non_2x/abstract-health-medical-science-healthcare-icon-digital-technology-science-concept-modern-innovation-treatment-medicine-on-hi-tech-future-blue-background-for-wallpaper-template-web-design-vector.jpg")
+    no-repeat center center/cover;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .about-container {
+    max-width: 1100px;
+    margin: auto;
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 50px 30px;
+    border-radius: 14px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  }
+  
+  header {
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  header h1 {
+    font-size: 38px;
+    color: #f39c12;
+  }
+  
+  p, li {
+    line-height: 1.8;
+    font-size: 17px;
+  }
+  
+  h2 {
+    color: #00d9ff;
+    margin-top: 40px;
+    text-align: center;
+  }
+  
+  ul {
+    padding-left: 20px;
+  }
+  
+  .team-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+  }
+  
+  .team-member {
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 25px;
+    border-radius: 12px;
+    width: 270px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+  }
+  
+  .team-member:hover {
+    transform: translateY(-8px);
+  }
+  
+  .team-member img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid #f39c12;
+  }
+  
+  .team-member h3 {
+    margin: 10px 0 5px;
+    color: #fff;
+  }
+  
+  .team-member p {
+    margin: 5px 0;
+    font-size: 15px;
+    color: #ccc;
+  }
+  
+  .contact-section {
+    text-align: center;
+    margin-top: 40px;
+  }
+  
+  .contact-section a {
+    color: #00bfff;
+    text-decoration: none;
+  }
+  
+  .contact-section a:hover {
+    text-decoration: underline;
+  }
+  
+  .home-link {
+    display: inline-block;
+    background-color: #f39c12;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .home-link:hover {
+    background-color: #d78e0f;
+  }
+  

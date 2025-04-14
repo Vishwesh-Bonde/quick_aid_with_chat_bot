@@ -1,0 +1,276 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #111;
+  color: #f0f0f0;
+  line-height: 1.6;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* Header */
+.site-header {
+  background: #1a1a1a;
+  border-bottom: 2px solid #333;
+  padding: 1rem 0;
+}
+
+.site-header .logo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #00d1b2;
+}
+
+.site-nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.site-nav a {
+  text-decoration: none;
+  color: #f0f0f0;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.site-nav a:hover,
+.site-nav .coming-soon:hover {
+  color: #00d1b2;
+  cursor: pointer;
+}
+
+/* Main Content */
+.main-content {
+  padding: 2rem 0;
+}
+
+/* Section */
+.section {
+  padding: 3rem 0;
+  animation: fadeIn 1.2s ease;
+}
+
+.section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #00d1b2;
+}
+
+.bg-light {
+  background-color: #1e1e1e;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  flex: 1;
+  min-width: 280px;
+}
+
+.image {
+  flex: 1;
+  min-width: 280px;
+  text-align: center;
+}
+
+.image img {
+  max-width: 100%;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 209, 178, 0.3);
+}
+
+/* Buttons */
+.download-button,
+.ai-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  margin: 1rem 1rem 0 0;
+  background: #00d1b2;
+  color: #000;
+  border: none;
+  border-radius: 2rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.download-button:hover,
+.ai-button:hover {
+  background: #00b89b;
+}
+
+/* Coming Soon Cards */
+.soon-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.soon-card {
+  background: #222;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  width: 300px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.soon-card:hover {
+  transform: translateY(-5px);
+}
+
+.soon-card img {
+  max-width: 80px;
+  margin-bottom: 1rem;
+}
+
+.soon-card h3 {
+  margin-bottom: 0.5rem;
+  color: #00d1b2;
+}
+
+/* News Section */
+.news-banner {
+  max-width: 100%;
+  margin-top: 2rem;
+  border-radius: 1rem;
+}
+
+#news-container {
+  margin-top: 1rem;
+}
+
+.news-item {
+  background: #222;
+  padding: 1rem;
+  border-left: 4px solid #00d1b2;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+}
+
+.news-item h3 {
+  font-size: 1.2rem;
+  color: #00d1b2;
+}
+
+.news-description {
+  margin: 0.5rem 0;
+}
+
+.read-more {
+  color: #00d1b2;
+  text-decoration: underline;
+  font-size: 0.9rem;
+}
+
+/* Footer */
+.site-footer {
+  background: #1a1a1a;
+  padding: 1rem 0;
+  text-align: center;
+  border-top: 2px solid #333;
+}
+
+.site-footer a {
+  color: #00d1b2;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .site-nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .flex {
+    flex-direction: column;
+  }
+
+  .soon-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.site-footer {
+  background-color: #111;
+  color: #ccc;
+  padding: 30px 0;
+  text-align: center;
+  font-size: 14px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.footer-column {
+  margin: 10px 0;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+.footer-column ul li:first-child {
+  margin-left: 0;
+}
+
+.footer-column ul li a {
+  color: #ffd700;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-column ul li a:hover {
+  color: #fff;
+}

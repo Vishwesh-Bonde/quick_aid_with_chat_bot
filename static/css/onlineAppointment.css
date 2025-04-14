@@ -1,0 +1,170 @@
+/* ========== RESET ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* ========== BODY STYLING ========== */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('https://wallpaperaccess.com/full/9802337.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+  }
+  
+  /* ========== HEADER ========== */
+  header {
+    background: linear-gradient(to right, #0a0a0a, #1a1a1a);
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+  
+  .sub-heading {
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin-top: 5px;
+  }
+  
+  /* ========== NAVIGATION ========== */
+  nav {
+    background: black;
+    padding: 10px 0;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: 0.3s ease;
+  }
+  
+  nav ul li a:hover,
+  nav ul li a.active {
+    background: #ffcc00;
+    color: black;
+  }
+  
+  /* ========== MAIN CONTENT ========== */
+  main {
+    flex: 1;
+  }
+  
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  
+  .card {
+    background: rgba(255, 255, 255, 0.95);
+    color: black;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    transition: 0.3s;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card h2 {
+    margin-bottom: 10px;
+    color: #222;
+  }
+  
+  .card p {
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    color: #333;
+  }
+  
+  label {
+    display: block;
+    font-weight: 600;
+    margin-top: 15px;
+    text-align: left;
+  }
+  
+  input[type="date"],
+  input[type="time"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+  }
+  
+  /* ========== BUTTON ========== */
+  .btn {
+    margin-top: 20px;
+    background: #ffcc00;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 7px;
+    color: black;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .btn:hover {
+    background-color: #ffe066;
+  }
+  
+  /* ========== APPOINTMENT RESULT ========== */
+  .result {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 0.95rem;
+  }
+  
+  /* ========== FOOTER ========== */
+  footer {
+    text-align: center;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    font-size: 0.9rem;
+  }
+  

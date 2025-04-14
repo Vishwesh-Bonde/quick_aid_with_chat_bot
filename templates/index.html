@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Quick Aid offers health solutions, home remedies, physiotherapy, medical news, and more. Stay healthy and informed." />
+  <meta name="keywords" content="health, remedies, physiotherapy, BMI, ovulation, cold and flu, pregnancy" />
+  <meta property="og:title" content="Quick Aid - Home" />
+  <meta property="og:description" content="Your one-stop solution for health-related tools and news." />
+  <title>Quick Aid - Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png.png') }}">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <h1 class="logo">Quick Aid</h1>
+      <nav class="site-nav">
+        <ul>
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('about') }}">About</a></li>
+          <li><a href="{{ url_for('home_remedies') }}">Home Remedies</a></li>
+          <li><a href="{{ url_for('physiotherapy') }}">Physiotherapy</a></li>
+          <li><a href="{{ url_for('providing_nurse') }}">Providing Nurse</a></li>
+          <li><a href="{{ url_for('nearest_doctor') }}">Nearest Dr</a></li>
+          <li><a href="{{ url_for('online_appointment') }}">Online Appointment</a></li>
+          <li><a class="coming-soon" onclick="alert('AI feature coming soon!')">AI</a></li>
+          <li><a class="coming-soon" onclick="alert('App integration coming soon!')">App</a></li>
+          {% if session.get('user_id') %}
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          {% else %}
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Welcome Section -->
+    <section id="welcome-section" class="section">
+      <div class="container">
+        <div class="flex">
+          <div class="text">
+            <h2>Welcome to Quick Aid</h2>
+            <p>Your one-stop solution for quick health support, remedies, therapy, and appointments. Stay informed and stay healthy!</p>
+          </div>
+          <div class="image">
+            <img src="{{ url_for('static', filename='images/doctor-welcome.png') }}" alt="Welcome to Quick Aid" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Coming Soon Features -->
+    <section id="coming-soon-section" class="section bg-light">
+      <div class="container">
+        <h2>Coming Soon</h2>
+        <div class="soon-cards">
+          <article class="soon-card">
+            <img src="{{ url_for('static', filename='images/ai-assist.png') }}" alt="AI Assistance">
+            <h3>AI Assistance</h3>
+            <p>We’re building a smart AI to guide your health queries with personalized advice.</p>
+          </article>
+          <article class="soon-card">
+            <img src="{{ url_for('static', filename='images/app-coming-soon.png') }}" alt="Mobile App">
+            <h3>Mobile App</h3>
+            <p>Access Quick Aid on the go! iOS and Android app launching soon.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- App Download Section -->
+    <section id="download-app-section" class="section">
+      <div class="container">
+        <div class="flex">
+          <div class="text">
+            <h2>Download Our App</h2>
+            <p>Get Quick Aid on your phone! Download our app to access health support on the go.</p>
+            <div class="download-buttons">
+              <a href="#" class="download-button">Download for iOS</a>
+              <a href="#" class="download-button">Download for Android</a>
+            </div>
+          </div>
+          <div class="image">
+            <img src="{{ url_for('static', filename='images/mobile-health-app.png') }}" alt="Download App" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Feature Section -->
+    <section id="ai-section" class="section bg-light">
+      <div class="container">
+        <div class="flex">
+          <div class="text">
+            <h2>Check Our AI</h2>
+            <p>Our AI is coming soon to help guide your health decisions with personalized advice. Stay tuned!</p>
+            <a href="#" class="ai-button">Learn More</a>
+          </div>
+          <div class="image">
+            <img src="{{ url_for('static', filename='images/ai-health.png') }}" alt="AI Assistant" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Medical News Section -->
+    <section id="news-section" class="section">
+      <div class="container">
+        <h2>Latest Medical News</h2>
+        <div id="news-container">
+          <p>Loading news...</p>
+        </div>
+        <img src="{{ url_for('static', filename='images/news-health.png') }}" alt="Medical News" class="news-banner" />
+      </div>
+    </section>
+
+  </main>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-links">
+      <div class="footer-column">
+        <p><strong>Quick Aid</strong> &copy; 2025. All rights reserved.</p>
+        <p><a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a></p>
+      </div>
+      <div class="footer-column">
+        <ul>
+          <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+          <li><a href="{{ url_for('contact') }}">Contact</a></li>
+          <li><a href="{{ url_for('services') }}">Services</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <!-- News Script -->
+  <script>
+    const apiKey = 'pub_7885866698dacc1c0a23c8a995c27cb96fb4a';
+    const newsContainer = document.getElementById('news-container');
+    const maxLength = 100;
+
+    fetch(`https://newsdata.io/api/1/news?apikey=${apiKey}&category=health&language=en`)
+      .then(response => response.json())
+      .then(data => {
+        newsContainer.innerHTML = '';
+        if (data.results && data.results.length > 0) {
+          data.results.forEach(article => {
+            const newsItem = document.createElement('div');
+            newsItem.className = 'news-item';
+
+            const description = article.description || 'No description available.';
+            const shortDescription = description.length > maxLength ? description.slice(0, maxLength) + '...' : description;
+
+            newsItem.innerHTML = `
+              <h3>${article.title}</h3>
+              <p class="news-description">${shortDescription}</p>
+              <a href="${article.link}" target="_blank" class="read-more">Read more</a>
+            `;
+
+            newsContainer.appendChild(newsItem);
+          });
+        } else {
+          newsContainer.innerHTML = '<p>No news available at the moment.</p>';
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching the news:', error);
+        newsContainer.innerHTML = '<p>Error loading news.</p>';
+      });
+  </script>
+
+</body>
+</html>

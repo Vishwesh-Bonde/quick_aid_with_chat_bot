@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact Us - Quick Aid</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+
+  <!-- Embedded Dark Theme CSS -->
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: #ccffcc;
+    }
+
+    header {
+      background-color: #0f0f0f;
+      padding: 20px;
+      border-bottom: 2px solid #1aff66;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      color: #1aff66;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 15px 0 0 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    nav ul li {
+      display: inline;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #80ffaa;
+      font-size: 1em;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: #1aff66;
+      color: #000;
+    }
+
+    .contact-form {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #111;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #1aff66;
+    }
+
+    .contact-form h2 {
+      text-align: center;
+      color: #1aff66;
+      margin-bottom: 25px;
+    }
+
+    .contact-form label {
+      display: block;
+      margin-bottom: 5px;
+      color: #80ffaa;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #1aff66;
+      background-color: #000;
+      color: #ccffcc;
+      border-radius: 6px;
+      font-size: 1em;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      box-shadow: 0 0 5px #1aff66;
+    }
+
+    .contact-form button {
+      background-color: #1aff66;
+      color: #000;
+      padding: 10px 20px;
+      border: none;
+      font-size: 1em;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .contact-form button:hover {
+      background-color: #33ff99;
+    }
+
+    .flash-messages {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    .flash-messages li {
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .alert-success {
+      background-color: #0f0;
+      color: #000;
+    }
+
+    .alert-error {
+      background-color: #f00;
+      color: #fff;
+    }
+
+    footer {
+      background-color: #0f0f0f;
+      text-align: center;
+      padding: 20px;
+      border-top: 2px solid #1aff66;
+      color: #99ffcc;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 0.95em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Contact Us</h1>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('home_remedies') }}">Home Remedies</a></li>
+        <li><a href="{{ url_for('physiotherapy') }}">Physiotherapy</a></li>
+        <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="contact-form">
+    <h2>Get in Touch</h2>
+
+    <!-- Flash message for successful submission -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flash-messages">
+          {% for category, message in messages %}
+            <li class="alert alert-{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('contact') }}">
+      <div>
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+
+      <div>
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+
+      <div>
+        <label for="message">Your Message:</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+      </div>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Quick Aid. All rights reserved.</p>
+  </footer>
+</body>
+</html>
