@@ -10,6 +10,74 @@
   <title>Quick Aid - Home</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png.png') }}">
+
+
+
+
+
+
+
+
+
+
+
+<style>
+  #ai-float-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  z-index: 10000;
+  text-align: center;
+  background: none;
+}
+
+#ai-float-btn a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+#ai-float-btn img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  background-color: white;
+  transition: transform 0.3s ease;
+}
+
+#ai-float-btn:hover img {
+  transform: scale(1.1);
+}
+
+.ai-float-title {
+  font-size: 12px;
+  color: #FFD700; /* Bright yellow */
+  font-weight: bold;
+  margin-top: 6px;
+}
+
+
+  
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </head>
 <body>
 
@@ -26,8 +94,10 @@
           <li><a href="{{ url_for('providing_nurse') }}">Providing Nurse</a></li>
           <li><a href="{{ url_for('nearest_doctor') }}">Nearest Dr</a></li>
           <li><a href="{{ url_for('online_appointment') }}">Online Appointment</a></li>
-          <li><a class="coming-soon" onclick="alert('AI feature coming soon!')">AI</a></li>
+          <li><a href="{{  url_for('health_metrics') }}">Health Metrics</a></li>
+          <li><a href="https://huggingface.co/spaces/vishwesh21/doctor">AI</a></li>
           <li><a class="coming-soon" onclick="alert('App integration coming soon!')">App</a></li>
+          <li><a href="{{  url_for('profile') }}">Profile</a></li>
           {% if session.get('user_id') %}
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
           {% else %}
@@ -60,12 +130,6 @@
     <section id="coming-soon-section" class="section bg-light">
       <div class="container">
         <h2>Coming Soon</h2>
-        <div class="soon-cards">
-          <article class="soon-card">
-            <img src="{{ url_for('static', filename='images/ai-assist.png') }}" alt="AI Assistance">
-            <h3>AI Assistance</h3>
-            <p>We’re building a smart AI to guide your health queries with personalized advice.</p>
-          </article>
           <article class="soon-card">
             <img src="{{ url_for('static', filename='images/app-coming-soon.png') }}" alt="Mobile App">
             <h3>Mobile App</h3>
@@ -100,8 +164,8 @@
         <div class="flex">
           <div class="text">
             <h2>Check Our AI</h2>
-            <p>Our AI is coming soon to help guide your health decisions with personalized advice. Stay tuned!</p>
-            <a href="#" class="ai-button">Learn More</a>
+            <p>Our AI is live now to help guide your health decisions with personalized advice. Stay tuned!</p>
+            <a href="https://huggingface.co/spaces/vishwesh21/doctor" class="ai-button">Learn More</a>
           </div>
           <div class="image">
             <img src="{{ url_for('static', filename='images/ai-health.png') }}" alt="AI Assistant" />
@@ -109,6 +173,26 @@
         </div>
       </div>
     </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- Medical News Section -->
     <section id="news-section" class="section">
@@ -178,6 +262,29 @@
         newsContainer.innerHTML = '<p>Error loading news.</p>';
       });
   </script>
+
+
+
+
+
+
+
+<!-- Floating AI Doctor Button with Title -->
+<div id="ai-float-btn">
+  <a href="https://huggingface.co/spaces/vishwesh21/doctor" target="_blank" title="Chat with AI Doctor">
+    <img src="{{ url_for('static', filename='images/ai-doc.jpg') }}" alt="AI Doctor">
+    <span class="ai-float-title">Consult to AI Doc</span>
+  </a>
+</div>
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>

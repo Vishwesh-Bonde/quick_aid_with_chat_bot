@@ -12,3 +12,5 @@ instance/
 .vscode/
 .DS_Store
 *.log
+.env
+

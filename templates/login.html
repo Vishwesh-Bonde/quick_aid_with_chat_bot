@@ -30,7 +30,14 @@
             border-radius: 5px;
             font-size: 0.9rem;
         }
+
+        .g-signin2 {
+            margin-top: 10px;
+            width: 100%;
+        }
     </style>
+    <!-- Google Sign-In API -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
 
@@ -75,11 +82,42 @@
                 <p class="forgot-password"><a href="#">Forgot Password?</a></p>
                 <p class="register-link">Don't have an account? <a href="/register">Sign Up</a></p>
             </form>
+
+            <!-- Google Sign-In Button -->
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
         </div>
     </div>
 
     <!-- FontAwesome CDN for user icon -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <script>
+        // This function is triggered after a successful Google sign-in
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            var id_token = googleUser.getAuthResponse().id_token;
+
+            // Send the id_token to the server for verification
+            fetch('/google-login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    token: id_token
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/';
+                } else {
+                    alert('Google login failed. Please try again.');
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>

@@ -36,3 +36,33 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #0056b3;
 }
+
+
+#floating-ai-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  #floating-ai-icon img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+  }
+  
+  #floating-ai-icon:hover img {
+    transform: scale(1.1);
+  }
+  

@@ -97,6 +97,11 @@ body {
   max-width: 100%;
   border-radius: 1rem;
   box-shadow: 0 0 10px rgba(0, 209, 178, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.image img:hover {
+  transform: rotate(10deg);
 }
 
 /* Buttons */
@@ -231,6 +236,7 @@ body {
     align-items: center;
   }
 }
+
 .site-footer {
   background-color: #111;
   color: #ccc;

@@ -1,11 +1,23 @@
 from flask import Flask, render_template, request, redirect, flash, url_for, session, jsonify
-import sqlite3
+from flask_dance.contrib.google import make_google_blueprint, google
 from werkzeug.security import generate_password_hash, check_password_hash
+import sqlite3
 from functools import wraps
-import requests
+import smtplib
+from email.message import EmailMessage
+from dotenv import load_dotenv
+import os
+
+EMAIL_USER = os.environ.get("EMAIL_USER")
+EMAIL_PASS = os.environ.get("EMAIL_PASS")
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key_here'
+app.config['SECRET_KEY'] = 'OCSPX-um-gavKI8sz6IU-JXPrGtVqGndpR'
+app.secret_key = 'OCSPX-um-gavKI8sz6IU-JXPrGtVqGndpR'  # Required for flash messages
+
+# === GOOGLE LOGIN SETUP ===
+google_bp = make_google_blueprint(client_id="641146444037-gp3io8d345fjsm1v93q93h9uhflpj9s3.apps.googleusercontent.com", client_secret="YOCSPX-um-gavKI8sz6IU-JXPrGtVqGndpR", redirect_to="google_login")
+app.register_blueprint(google_bp, url_prefix="/google_login")
 
 # === DATABASE CONNECTION ===
 def get_db_connection():
@@ -17,7 +29,6 @@ def get_db_connection():
 def init_db():
     with get_db_connection() as conn:
         cur = conn.cursor()
-
         cur.execute('''CREATE TABLE IF NOT EXISTS users (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         username TEXT NOT NULL,
@@ -28,17 +39,14 @@ def init_db():
                         height_cm REAL,
                         weight_kg REAL,
                         blood_group TEXT)''')
-
         cur.execute('''CREATE TABLE IF NOT EXISTS remedies (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         symptom TEXT NOT NULL,
                         remedy TEXT NOT NULL)''')
-
         cur.execute('''CREATE TABLE IF NOT EXISTS exercises (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         condition TEXT NOT NULL,
                         exercise TEXT NOT NULL)''')
-
         conn.commit()
 
 # === LOGIN REQUIRED DECORATOR ===
@@ -52,7 +60,6 @@ def login_required(f):
     return decorated_function
 
 # === ROUTES ===
-
 @app.route('/')
 def home():
     user = None
@@ -71,16 +78,12 @@ def about():
 def home_remedies():
     query = request.args.get("query", "").strip().lower()
     result = None
-
     if query:
         with get_db_connection() as conn:
             cur = conn.cursor()
             cur.execute("SELECT symptom, remedy FROM remedies WHERE LOWER(symptom) LIKE ?", (f'%{query}%',))
             result = cur.fetchone()
-
-    return render_template('homeRemedies.html',
-                           search_query=query if query else None,
-                           search_result=result)
+    return render_template('homeRemedies.html', search_query=query if query else None, search_result=result)
 
 @app.route('/physiotherapy')
 def physiotherapy():
@@ -89,7 +92,6 @@ def physiotherapy():
 @app.route('/search_exercises')
 def search_exercises():
     query = request.args.get("query", "").strip().lower()
-
     if not query:
         return jsonify([])
 
@@ -100,7 +102,6 @@ def search_exercises():
 
     # ✅ Remove duplicates before sending to frontend
     unique_results = list({(row['condition'], row['exercise']) for row in rows})
-
     return jsonify(unique_results)
 
 @app.route('/providing-nurse')
@@ -123,19 +124,6 @@ def online_appointment():
 def dashboard():
     return render_template('dashboard.html', username=session['username'])
 
-@app.route('/api/news')
-def get_news():
-    API_KEY = 'pub_7885866698dacc1c0a23c8a995c27cb96fb4a'
-    try:
-        response = requests.get(
-            f'https://newsdata.io/api/1/news?apikey={API_KEY}&category=health&language=en',
-            timeout=10
-        )
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        return {'error': str(e)}, 500
-
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -150,14 +138,28 @@ def profile():
             height_cm = request.form['height']
             weight_kg = request.form['weight']
             blood_group = request.form['blood_group']
-
-            cur.execute('''UPDATE users SET age = ?, gender = ?, height_cm = ?, weight_kg = ?, blood_group = ?
-                           WHERE id = ?''', (age, gender, height_cm, weight_kg, blood_group, session['user_id']))
+            cur.execute('''UPDATE users SET age = ?, gender = ?, height_cm = ?, weight_kg = ?, blood_group = ? WHERE id = ?''',
+                        (age, gender, height_cm, weight_kg, blood_group, session['user_id']))
             conn.commit()
             flash('Medical information updated!', 'success')
             return redirect(url_for('home'))
 
     return render_template('profile.html', user=user)
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
+
+        if send_email('New Contact Form Submission', f"Name: {name}\nEmail: {email}\nMessage: {message}"):
+            flash('✅ Your message has been sent successfully!', 'success')
+        else:
+            flash('❌ There was an error sending your message. Please try again.', 'error')
+
+        return redirect(url_for('contact'))
+    return render_template('contact.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -165,7 +167,6 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
-
         if not username or not email or not password:
             flash('All fields are required!', 'error')
             return redirect(url_for('register'))
@@ -190,7 +191,6 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-
         if not email or not password:
             flash('Both email and password are required!', 'error')
             return redirect(url_for('login'))
@@ -210,29 +210,6 @@ def login():
                 flash('Invalid email or password. Try again.', 'error')
 
     return render_template('login.html')
-@app.route('/services')
-def services():
-    return render_template('services.html')
-@app.route('/faq')
-def faq():
-    return render_template('faq.html')
-@app.route('/contact', methods=['GET', 'POST'])
-def contact():
-    if request.method == 'POST':
-        # Retrieve form data
-        name = request.form['name']
-        email = request.form['email']
-        message = request.form['message']
-
-        # Here you can process the data (e.g., send an email, save to a database)
-        # For now, let's just flash a success message
-        flash('Your message has been sent successfully!', 'success')
-
-        # Redirect to the home page after submitting
-        return redirect(url_for('home'))
-
-    return render_template('contact.html')
-
 
 @app.route('/logout')
 def logout():
@@ -240,6 +217,92 @@ def logout():
     session.pop('username', None)
     flash('Logged out successfully.', 'success')
     return redirect(url_for('login'))
+
+@app.route('/health_metrics', methods=['GET', 'POST'])
+def health_metrics():
+    bmi = category = bmr = calories = water_intake = None
+
+    if request.method == 'POST':
+        try:
+            weight = float(request.form['weight'])
+            height_cm = float(request.form['height'])
+            age = int(request.form['age'])
+            gender = request.form['gender']
+            activity = request.form['activity']
+
+            height_m = height_cm / 100
+            bmi = round(weight / (height_m ** 2), 2)
+
+            if bmi < 18.5:
+                category = 'Underweight'
+            elif bmi < 25:
+                category = 'Normal'
+            elif bmi < 30:
+                category = 'Overweight'
+            else:
+                category = 'Obese'
+
+            # BMR Calculation (Mifflin-St Jeor)
+            if gender == 'male':
+                bmr = round(10 * weight + 6.25 * height_cm - 5 * age + 5, 2)
+            else:
+                bmr = round(10 * weight + 6.25 * height_cm - 5 * age - 161, 2)
+
+            # Calorie Needs Multiplier
+            activity_multipliers = {
+                'sedentary': 1.2,
+                'light': 1.375,
+                'moderate': 1.55,
+                'active': 1.725,
+                'very_active': 1.9
+            }
+            calories = round(bmr * activity_multipliers.get(activity, 1.2), 2)
+
+            # Water Intake (in Litres)
+            water_intake = round(weight * 0.033, 2)
+
+        except Exception as e:
+            print("Error:", e)
+
+    return render_template('healthMetrics.html', bmi=bmi, category=category,
+                           bmr=bmr, calories=calories, water_intake=water_intake)
+
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
+@app.route('/services')
+def services():
+    return render_template('services.html')
+
+# Google Login Route
+@app.route('/google_login')
+def google_login():
+    if not google.authorized:
+        return redirect(url_for('google.login'))
+
+    # Get user info from Google
+    google_user = google.get('/plus/v1/people/me').json()
+    username = google_user['displayName']
+    email = google_user['emails'][0]['value']
+
+    # Check if user exists in DB or create new user
+    with get_db_connection() as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT id FROM users WHERE email = ?", (email,))
+        user = cur.fetchone()
+
+        if user:
+            session['user_id'] = user['id']
+            session['username'] = username
+        else:
+            cur.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (username, email, ''))
+            conn.commit()
+            session['user_id'] = cur.lastrowid
+            session['username'] = username
+
+    flash(f'Welcome, {username}!', 'success')
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)

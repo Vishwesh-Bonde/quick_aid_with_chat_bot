@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Metrics</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png.png') }}">
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #111;
+            color: #f0f0f0;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .site-header {
+            background: #1a1a1a;
+            border-bottom: 2px solid #333;
+            padding: 1rem 0;
+        }
+
+        .site-header .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00d1b2;
+            text-align: center;
+        }
+
+        .site-nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .site-nav a {
+            text-decoration: none;
+            color: #f0f0f0;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .site-nav a:hover,
+        .site-nav .coming-soon:hover {
+            color: #00d1b2;
+            cursor: pointer;
+        }
+
+        .card {
+            background: #222;
+            padding: 30px;
+            max-width: 600px;
+            margin: 50px auto;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            color: #00d1b2;
+            margin-bottom: 20px;
+        }
+
+        label, input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 1rem;
+            border-radius: 6px;
+            border: 1px solid #333;
+        }
+
+        input, select {
+            background: #333;
+            color: #f0f0f0;
+        }
+
+        button {
+            background-color: #00d1b2;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #00a68c;
+        }
+
+        .result {
+            margin-top: 20px;
+            background: #333;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: left;
+        }
+
+        .result p {
+            margin: 8px 0;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <h1 class="logo">Quick Aid</h1>
+        <nav class="site-nav">
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('home_remedies') }}">Home Remedies</a></li>
+                <li><a href="{{ url_for('physiotherapy') }}">Physiotherapy</a></li>
+                <li><a href="{{ url_for('providing_nurse') }}">Providing Nurse</a></li>
+                <li><a href="{{ url_for('nearest_doctor') }}">Nearest Dr</a></li>
+                <li><a href="{{ url_for('online_appointment') }}">Online Appointment</a></li>
+                <li><a href="{{ url_for('health_metrics') }}">Health Metrics</a></li>
+                <li><a class="coming-soon" onclick="alert('AI feature coming soon!')">AI</a></li>
+                <li><a class="coming-soon" onclick="alert('App integration coming soon!')">App</a></li>
+                {% if session.get('user_id') %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="card">
+        <h2>Health Metrics Calculator</h2>
+        <form method="POST">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" name="weight" step="0.1" min="10" max="300" required placeholder="e.g. 70">
+
+            <label for="height">Height (cm):</label>
+            <input type="number" name="height" step="0.1" min="50" max="250" required placeholder="e.g. 170">
+
+            <label for="age">Age (years):</label>
+            <input type="number" name="age" min="1" max="120" required placeholder="e.g. 25">
+
+            <label for="gender">Gender:</label>
+            <select name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+
+            <label for="activity">Activity Level:</label>
+            <select name="activity" required>
+                <option value="sedentary">Sedentary (little or no exercise)</option>
+                <option value="light">Light (1–3 days/week)</option>
+                <option value="moderate">Moderate (3–5 days/week)</option>
+                <option value="active">Active (6–7 days/week)</option>
+                <option value="very_active">Very Active (hard daily training)</option>
+            </select>
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        {% if bmi %}
+        <div class="result">
+            <p><strong>Your BMI:</strong> {{ bmi }}</p>
+            <p><strong>Category:</strong> {{ category }}</p>
+            <p><strong>BMR:</strong> {{ bmr }} kcal/day</p>
+            <p><strong>Daily Calorie Needs:</strong> {{ calories }} kcal/day</p>
+            <p><strong>Recommended Water Intake:</strong> {{ water_intake }} L/day</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Quick Aid. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
