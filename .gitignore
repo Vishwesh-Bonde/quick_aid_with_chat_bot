@@ -14,3 +14,16 @@ instance/
 *.log
 .env
 
+
+
+
+
+*.pyc
+*.pyo
+*.pyd
+myenv/
+*.sqlite3
+*.db
+*.log
+*.DS_Store
+.env.*
